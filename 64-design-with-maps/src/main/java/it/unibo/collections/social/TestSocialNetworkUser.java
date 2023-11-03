@@ -48,11 +48,11 @@ public final class TestSocialNetworkUser {
          * 
          * * Adam Smith, asmith, (no age)
          */
-        final SocialNetworkUser<User> kbacon = null; //TODO
-        final SocialNetworkUser<User> dwashington = null; //TODO
-        final SocialNetworkUser<User> mgladwell = null; //TODO
-        final SocialNetworkUser<User> ntaleb = null; //TODO
-        final User asmith = null; //TODO
+        final SocialNetworkUser<User> kbacon = new SocialNetworkUserImpl<>("Kevin","Bacon","kbacon",56);
+        final SocialNetworkUser<User> dwashington = new SocialNetworkUserImpl<>("Denzel","Washington","kbacon",59);
+        final SocialNetworkUser<User> mgladwell = new SocialNetworkUserImpl<>("Malcom","Gladwell","kbacon",51);
+        final SocialNetworkUser<User> ntaleb = new SocialNetworkUserImpl<>("Nicholas","Taleb","kbacon",54);
+        final User asmith = new UserImpl("Adam", "Smith", "asmith");
         /*
          * Make people follow each other
          */

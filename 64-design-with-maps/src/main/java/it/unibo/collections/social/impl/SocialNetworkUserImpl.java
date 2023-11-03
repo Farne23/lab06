@@ -11,9 +11,13 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
+import javax.swing.RowFilter.Entry;
 
 /**
  * 
@@ -36,6 +40,8 @@ public final class SocialNetworkUserImpl<U extends User> extends UserImpl implem
      * In order to save the people followed by a user organized in groups, adopt
      * a generic-type Map:  think of what type of keys and values would best suit the requirements
      */
+
+    Map<User,String> FollowedUsers;
 
     /*
      * [CONSTRUCTORS]
@@ -62,12 +68,16 @@ public final class SocialNetworkUserImpl<U extends User> extends UserImpl implem
      *            application
      */
     public SocialNetworkUserImpl(final String name, final String surname, final String user, final int userAge) {
-        super(null, null, null, 0);
+        super(name, surname, user, userAge);
+        FollowedUsers = new HashMap<User,String>();
     }
 
     /*
      * 2) Define a further constructor where the age defaults to -1
      */
+    public SocialNetworkUserImpl(final String name, final String surname, final String user){
+        this(name,surname,user,-1);
+    }
 
     /*
      * [METHODS]
@@ -76,7 +86,11 @@ public final class SocialNetworkUserImpl<U extends User> extends UserImpl implem
      */
     @Override
     public boolean addFollowedUser(final String circle, final U user) {
-        return false;
+        boolean retVal = FollowedUsers.containsKey(user);
+
+        FollowedUsers.put(user, circle);
+
+        return !retVal;
     }
 
     /**
@@ -86,11 +100,17 @@ public final class SocialNetworkUserImpl<U extends User> extends UserImpl implem
      */
     @Override
     public Collection<U> getFollowedUsersInGroup(final String groupName) {
-        return null;
+        Collection<U> FollowedUsersInGroup = new HashSet<U>();
+        for (Map.Entry FollowedUser : FollowedUsers.entrySet()) {
+            if(FollowedUser.getValue() == groupName){
+                FollowedUsersInGroup.add((U)FollowedUser.getKey());
+            }
+        }
+        return FollowedUsersInGroup;
     }
 
     @Override
     public List<U> getFollowedUsers() {
-        return null;
+        return new LinkedList<U>((Set<U>)FollowedUsers.keySet());
     }
 }
